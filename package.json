@@ -1,0 +1,25 @@
+{
+  "name": "hackerbay-microservice",
+  "version": "1.0.0",
+  "description": "A Simple Stateless Microservice in Nodejs",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Oyinkan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "debug": "^3.1.0",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.18.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.2.0"
+  }
+}
