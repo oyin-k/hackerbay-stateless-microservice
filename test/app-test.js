@@ -16,7 +16,7 @@ describe('Hackerbay-Microservice-Test', () => {
         it('it should not POST details if they do not meet requirements', (done) => {
             chai.request(app)
                 .post('/api/auth/sign-in')
-                .send({username: 'me', password: ''})
+                .send({username: '', password: 'mefef'})
                 .end((err, res) => {
                     res.should.have.status(400);
                     done();
