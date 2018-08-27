@@ -6,12 +6,11 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('Hackerbay-Microservice-Test', () => {
-    
+    let token;
 
     describe('/POST authentication', () => {
         
-        const mockDetails = { username: 'me', password: 'iCode' };
-        let token;
+        const mockDetails = { username: 'mefff', password: 'iCode77ff6' };
         
         it('it should not POST details if they do not meet requirements', (done) => {
             chai.request(app)
@@ -21,7 +20,7 @@ describe('Hackerbay-Microservice-Test', () => {
                     res.should.have.status(400);
                     done();
                 })
-        })
+        });
 
         it('it should POST details with the JWT', (done) => {
             chai.request(app)
@@ -30,9 +29,37 @@ describe('Hackerbay-Microservice-Test', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property('isAuthorized');
-                    token = res.body.token;
+                    token = res.body.jwtToken;
+                    console.log('Post token:', token);
                     done();
                 })
-        })
+        });
+    })
+
+    describe('/PATCH json-patch-object', () => {
+        const objectToPatch = '{ "user": { "firstName": "Albert", "lastName": "Einstein" } }';
+        const patch = '[{"op": "replace", "path": "/user/firstName", "value": "Leonado"}, {"op": "replace", "path": "/user/lastName", "value": "Da Vinci"}]';
+
+        it('it should not patch json object if token is not verified', (done) => {
+            chai.request(app)
+                .patch('/api/patchedObject')
+                .set('token', '')
+                .send({objectToPatch, patch})
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                })
+        });
+
+        it('it should patch json object ', (done) => {
+            chai.request(app)
+                .patch('/api/patchedObject')
+                .set('token', token)
+                .send({objectToPatch, patch})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                })
+        });
     })
 })
